@@ -1,6 +1,7 @@
 from __future__ import division
 from collections import Counter
 import math, random
+from matplotlib import pyplot as plt
 
 def random_kid():
     return random.choice(["boy", "girl"])
@@ -21,9 +22,11 @@ def normal_pdf(x, mu=0, sigma=1):
 def plot_normal_pdfs(plt):
     xs = [x / 10.0 for x in range(-50, 50)]
     plt.plot(xs,[normal_pdf(x,sigma=1) for x in xs],'-',label='mu=0,sigma=1')
-    plt.plot(xs,[normal_pdf(x,sigma=2) for x in xs],'--',label='mu=0,sigma=2')
+    plt.plot(xs,[normal_pdf(x,sigma=0.1) for x in xs],'--',label='mu=0,sigma=0.1')
     plt.plot(xs,[normal_pdf(x,sigma=0.5) for x in xs],':',label='mu=0,sigma=0.5')
     plt.plot(xs,[normal_pdf(x,mu=-1)   for x in xs],'-.',label='mu=-1,sigma=1')
+    plt.plot(xs, [normal_pdf(x, mu=3,sigma=0.5) for x in xs], '-.', label='mu=3,sigma=0.5')
+    plt.plot(xs, [normal_pdf(x, mu=-2) for x in xs], '-.', label='mu=-2,sigma=1')
     plt.legend()
     plt.show()      
 
@@ -89,7 +92,8 @@ def make_hist(p, n, num_points):
     plt.plot(xs,ys)
     plt.show()
 
-
+def random_ball():
+    return random.choice(["A", "B"])
 
 if __name__ == "__main__":
 
@@ -114,3 +118,28 @@ if __name__ == "__main__":
 
     print "P(both | older):", both_girls / older_girl      # 0.514 ~ 1/2
     print "P(both | either): ", both_girls / either_girl   # 0.342 ~ 1/3
+
+    a1=0
+    a2=0
+    aboth=0
+    n=10000
+    random.seed(2)
+    for _ in range(n):
+        get1 = random_ball()
+        get2 = random_ball()
+        if get1=="B":
+            a1 +=1
+        if get1=="B" and get2=="B":
+            aboth +=1
+        if get2=="B":
+            a2 +=1
+
+    print "P(both):",aboth/n
+    print "P(get1):", a1 / n
+    print "P(get2):", a2 / n
+    print "P(get1,get2):", a1*a2/n / n
+    print "P(get1|get2)=p(both)/p(get2)=",(aboth/n)/(a2/n)
+    print "P(get1|get2)=P(get1,get2)/p(get2)=P(get1)p(get2)/p(get2)=P(get1)",  (a1 / n)
+
+
+plot_normal_pdfs(plt)
