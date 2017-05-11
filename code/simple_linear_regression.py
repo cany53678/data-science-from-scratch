@@ -50,7 +50,7 @@ if __name__ == "__main__":
     alpha, beta = least_squares_fit(num_friends_good, daily_minutes_good)
     print "alpha", alpha
     print "beta", beta
-
+    print "predict:num_friends_good=21,daily_minutes_good=(57.13)"+str(predict(alpha,beta,21))
     print "r-squared", r_squared(alpha, beta, num_friends_good, daily_minutes_good)
 
     print
@@ -67,3 +67,5 @@ if __name__ == "__main__":
                                       0.0001)
     print "alpha", alpha
     print "beta", beta
+
+    print "predict:num_friends_good=21,daily_minutes_good=(57.13)"+str(predict(alpha,beta,21))
